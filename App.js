@@ -1,18 +1,37 @@
-import {StatusBar} from "expo-status-bar";
 import {StyleSheet, Text, View, Button, TextInput} from "react-native";
+import {useState} from "react";
 
 export default function App() {
+  const [input, setInput] = useState("");
+  const [goals, setGoals] = useState([]);
+
+  const inputChangeHandler = (e) => {
+    setInput(e);
+  };
+
+  const saveGoalsHandler = () => {
+    setGoals((prevGoals) => [...prevGoals, input]);
+    setInput("");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-          <TextInput placeholder="Set your goals" style={styles.textInput} />
-          <Button title="Save" />
+          <TextInput
+            onChangeText={inputChangeHandler}
+            placeholder="Set your goals"
+            style={styles.textInput}
+            value={input}
+          />
+          <Button title="Save" onPress={saveGoalsHandler} />
         </View>
       </View>
 
       <View style={styles.listContainer}>
-        <Text>List of goals...</Text>
+        {goals.map((goal) => {
+          return <Text key={goal}>{goal}</Text>;
+        })}
       </View>
     </View>
   );
