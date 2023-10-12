@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Button, TextInput} from "react-native";
+import {StyleSheet, Text, View, Button, TextInput, ScrollView} from "react-native";
 import {useState} from "react";
 
 export default function App() {
@@ -28,11 +28,17 @@ export default function App() {
         </View>
       </View>
 
-      <View style={styles.listContainer}>
+      <ScrollView style={styles.listContainer}>
         {goals.map((goal) => {
-          return <Text key={goal}>{goal}</Text>;
+          return (
+            <View style={styles.listItemContainer}>
+              <Text style={styles.listItem} key={goal}>
+                {goal}
+              </Text>
+            </View>
+          );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -58,5 +64,16 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 4,
+  },
+  listItemContainer: {
+    borderRadius: 15,
+    backgroundColor: "#8255fb",
+    margin: 10,
+    padding: 5,
+    justifyContent: "center",
+  },
+  listItem: {
+    color: "white",
+    paddingLeft: 10,
   },
 });
