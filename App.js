@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Button, TextInput, FlatList} from "react-native";
+import {StyleSheet, Text, View, Button, TextInput, FlatList, Pressable} from "react-native";
 import {useState} from "react";
 
 export default function App() {
@@ -12,6 +12,10 @@ export default function App() {
   const saveGoalsHandler = () => {
     setGoals((prevGoals) => [...prevGoals, {goal: input, key: Math.random().toString()}]);
     setInput("");
+  };
+
+  const deleteGoalHandler = (key) => {
+    setGoals(goals.filter((goal) => goal.key !== key));
   };
 
   return (
@@ -33,9 +37,11 @@ export default function App() {
           data={goals}
           renderItem={({item}) => {
             return (
-              <View style={styles.listItemContainer}>
-                <Text style={styles.listItem}>{item.goal}</Text>
-              </View>
+              <Pressable onPress={() => deleteGoalHandler(item.key)}>
+                <View style={styles.listItemContainer}>
+                  <Text style={styles.listItem}>{item.goal}</Text>
+                </View>
+              </Pressable>
             );
           }}
         />
